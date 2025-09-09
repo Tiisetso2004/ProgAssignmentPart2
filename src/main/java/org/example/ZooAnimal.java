@@ -2,6 +2,8 @@ package org.example;
 
 import java.util.Scanner;
 
+
+
 // Instantiation of the  CreateAnimal class with the super constructor
 public class ZooAnimal extends CreateAnimal implements iAnimal {
 
@@ -39,29 +41,21 @@ public class ZooAnimal extends CreateAnimal implements iAnimal {
 
     @Override
     public int ageVerification() {
-        Scanner scanner = new Scanner(System.in);
-
+        Scanner scan = new Scanner(System.in);
         while (true) {
             System.out.println("Enter the animal's age:");
-
-            // 1) Check if the next token is an int
-            if (scanner.hasNextInt()) {
-                age = scanner.nextInt();
-                scanner.nextLine();  // consume end-of-line
-
-                // 2) Reject negatives
-                if (age >= 0) {
-                    this.age = age;
-                    System.out.println("Age successfully captured.");
-                    return this.age;
+            String inputAge = scan.nextLine();
+            try {
+                int parsedAge = Integer.parseInt(inputAge);
+                if (parsedAge < 0) {
+                    System.out.println("Invalid age entry. Try again.");
                 } else {
-                    System.out.println("Invalid age entry. Age cannot be negative. Try again.");
+                    this.age = parsedAge;
+                    System.out.println("Age successfully captured.");
+                    return age;
                 }
-
-            } else {
-                // Not an integer at all: print message and skip that token
-                System.out.println("Please enter a valid whole number.");
-
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number.");
             }
         }
     }
@@ -102,7 +96,7 @@ public class ZooAnimal extends CreateAnimal implements iAnimal {
         while (true) {
             System.out.println("Enter the animal's habitat:");
             String input = scanner.nextLine();
-            if (input.isEmpty() || input.matches(".*\\d.*") ||input.matches(".*[`~@#$%^&()_=+{}:;'<>,./?].*")) {
+            if (input.isEmpty() || input.matches(".*\\d.*") ||input.matches(".*[`~@#$%^&()_=+{}:;'<>,./?].*")) { // use of regex to prevent the use of special characters
                 System.out.println("Invalid habitat entry. Input cannot contain special characters or be empty .");
             } else {
                 this.habitat = input;

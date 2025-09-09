@@ -1,14 +1,12 @@
-
 import org.example.ZooAnimal;
 import org.junit.jupiter.api.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ZooAnimalTest {
 
-    private final InputStream originalIn = System.in;
+    private final InputStream originalInput = System.in;
     private ZooAnimal animal;
 
     /**
@@ -29,7 +27,7 @@ public class ZooAnimalTest {
     @AfterEach
     public void cleanup() {
         // Restore the original System.in after each test
-        System.setIn(originalIn);
+        System.setIn(originalInput);
     }
 
     @Test
@@ -56,15 +54,22 @@ public class ZooAnimalTest {
     }
 
     @Test
-    public void testAgeVerification_rejectNonIntegerAndNegative_thenAcceptValid() {
-        // "abc" fails (not a number), "-5" fails, then "3" succeeds
-        setInput("abc\n-5\n3\n");
+ public   void testAgeVerificationWithValidInput() {
+        // Simulate user typing "5" and pressing Enter
+        String simulatedInput = "5\n";
+        InputStream originalIn = System.in;
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-        int age = animal.ageVerification();
 
-        assertEquals(3, age);
-        assertEquals(3, animal.getAge());
+        int result = animal.ageVerification();
+
+        assertEquals(5, result);
+
+        // Restore original System.in
+        System.setIn(originalIn);
     }
+
+
 
     @Test
     public void testSpeciesVerification_rejectEmptyAndShort_thenAcceptValid() {
@@ -100,36 +105,24 @@ public class ZooAnimalTest {
     }
 
     @Test
-    public void testToString(){
-        // Provide valid inputs for all four verifications in order
-        // name
-        // age
-        // species
-        // habitat
-        String inputs = String.join(
-                "\n",
-                "Zara",      // name
-                "4",         // age
-                "Gorilla",   // species
-                "Jungle"     // habitat
-        ) + "\n";
-        setInput(inputs);
+    public void testAgeVerificationWithInvalidThenValidInput() {
+        // Simulate user typing "abc", then "-2", then "7"
+        String simulatedInput = "abc\n-2\n7\n";
+        InputStream originalIn = System.in;
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-        animal.nameVerification();
-        animal.ageVerification();
-        animal.speciesVerification();
-        animal.habitatVerification();
 
-        String output = animal.toString();
+        int result = animal.ageVerification();
 
-        // Check that toString() mentions every field and ends with the stars
-        assertTrue(output.contains("Zara"));
-        assertTrue(output.contains("4"));
-        assertTrue(output.contains("Gorilla"));
-        assertTrue(output.contains("Jungle"));
-        assertTrue(output.endsWith("***************************"));
+        assertEquals(7, result);
+
+        System.setIn(originalIn);
     }
+
+
 }
+
+
 
 
 

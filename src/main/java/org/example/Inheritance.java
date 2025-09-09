@@ -8,7 +8,7 @@ public class Inheritance {
     public static void main(String[] args) {
         // Scanner for user input
 
-        Scanner scanner = new Scanner(System.in);
+
 
         // Instantiation of the array list to store every object alongside its attributes
 
@@ -16,12 +16,12 @@ public class Inheritance {
         System.out.println();
 
         // User will be prompted to choose preferred amount of objects per session
-
+        Scanner sc = new Scanner(System.in);
         System.out.println("**************************************");
         System.out.println("How many animals do you want to enter?");
         System.out.println("**************************************");
-        int count = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        int count = sc.nextInt();
+        sc.nextLine(); // consume newline
 
         // This loop iterates the creation of the amount of objects declared by the user earlier
 
@@ -44,6 +44,6 @@ public class Inheritance {
             System.out.println(animal);
         }
 
-        scanner.close();
+        sc.close();
     }
 }
