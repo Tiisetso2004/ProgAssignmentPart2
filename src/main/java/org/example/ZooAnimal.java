@@ -40,23 +40,32 @@ public class ZooAnimal extends CreateAnimal implements iAnimal {
     @Override
     public int ageVerification() {
         Scanner scanner = new Scanner(System.in);
+
         while (true) {
             System.out.println("Enter the animal's age:");
-            String input = scanner.nextLine();
-            try {
-                int parsedAge = Integer.parseInt(input);
-                if (parsedAge < 0) {
-                    System.out.println("Invalid age entry. Try again.");
-                } else {
-                    this.age = parsedAge;
+
+            // 1) Check if the next token is an int
+            if (scanner.hasNextInt()) {
+                age = scanner.nextInt();
+                scanner.nextLine();  // consume end-of-line
+
+                // 2) Reject negatives
+                if (age >= 0) {
+                    this.age = age;
                     System.out.println("Age successfully captured.");
-                    return age;
+                    return this.age;
+                } else {
+                    System.out.println("Invalid age entry. Age cannot be negative. Try again.");
                 }
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number.");
+
+            } else {
+                // Not an integer at all: print message and skip that token
+                System.out.println("Please enter a valid whole number.");
+
             }
         }
     }
+
 
     /**
      * This method enables the user to verify input (species)
@@ -93,7 +102,7 @@ public class ZooAnimal extends CreateAnimal implements iAnimal {
         while (true) {
             System.out.println("Enter the animal's habitat:");
             String input = scanner.nextLine();
-            if (input.isEmpty() || input.matches(".*\\d.*") ||input.contains("`~@#$%^&()_=+{}:;'<>,./?")) {
+            if (input.isEmpty() || input.matches(".*\\d.*") ||input.matches(".*[`~@#$%^&()_=+{}:;'<>,./?].*")) {
                 System.out.println("Invalid habitat entry. Input cannot contain special characters or be empty .");
             } else {
                 this.habitat = input;
