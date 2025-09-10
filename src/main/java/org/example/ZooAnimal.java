@@ -10,6 +10,7 @@ public class ZooAnimal extends CreateAnimal implements iAnimal {
     public ZooAnimal() {
         super("", 0, "", ""); // Placeholder values will be overridden
     }
+    Scanner scanner = new Scanner(System.in);// Use of a single scanner object declared globally to receive input (debugging)
 
     /**
      * This method enables the user to verify input (species)
@@ -19,7 +20,7 @@ public class ZooAnimal extends CreateAnimal implements iAnimal {
 
     @Override
     public String nameVerification() {
-        Scanner scanner = new Scanner(System.in);
+
         while (true) {
             System.out.println("Enter the animal's name:");
             String input = scanner.nextLine();
@@ -41,10 +42,10 @@ public class ZooAnimal extends CreateAnimal implements iAnimal {
 
     @Override
     public int ageVerification() {
-        Scanner scan = new Scanner(System.in);
+
         while (true) {
             System.out.println("Enter the animal's age:");
-            String inputAge = scan.nextLine();
+            String inputAge = scanner.nextLine();  // use of single scanner was initiated due to the missing input of this method during unit testing(toString() method in the unit test)
             try {
                 int parsedAge = Integer.parseInt(inputAge);
                 if (parsedAge < 0) {
@@ -69,7 +70,7 @@ public class ZooAnimal extends CreateAnimal implements iAnimal {
 
     @Override
     public String speciesVerification() {
-        Scanner scanner = new Scanner(System.in);
+
         while (true) {
             System.out.println("Enter the animal's species:");
             String input = scanner.nextLine();
@@ -92,7 +93,7 @@ public class ZooAnimal extends CreateAnimal implements iAnimal {
 
     @Override
     public String habitatVerification() {
-        Scanner scanner = new Scanner(System.in);
+
         while (true) {
             System.out.println("Enter the animal's habitat:");
             String input = scanner.nextLine();
@@ -107,17 +108,19 @@ public class ZooAnimal extends CreateAnimal implements iAnimal {
     }
 
     /**
-     * This method is responsible for printing out a simply formatted report
+     * This method is responsible for printing out a simply formatted report(template)
      * Retrieves the correctly assigned variables using getters and setters
      */
 
     @Override
     public String toString() {
-        return "Name: " + getName() +
-                "\nAge: " + getAge() +
-                "\nSpecies: " + getSpecies() +
-                "\nHabitat: " + getHabitat() +
-                "\n***************************";
+        String template = STR."""
+Name: \{getName()}
+Age: \{getAge()}
+Species: \{getSpecies()}
+Habitat: \{getHabitat()}
+***************************""";
+        return template ;
     }
 }
 

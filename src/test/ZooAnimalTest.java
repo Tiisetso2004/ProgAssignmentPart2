@@ -119,7 +119,42 @@ public class ZooAnimalTest {
         System.setIn(originalIn);
     }
 
+    @Test
+    public void testToString(){
+        // Provide valid inputs for all four verifications in order
+        // name
+        // age
+        // species
+        // habitat
+        // name
+        // age
+        // species
+        // habitat
+        String inputs = STR."""
+\{String.join(
+                "\n",
+                "Zara",      // name
+                "4",         // age
+                "Gorilla",   // species
+                "Jungle"     // habitat
+        )}
+""";
+        setInput(inputs);
 
+        animal.nameVerification();
+        animal.ageVerification();
+        animal.speciesVerification();
+        animal.habitatVerification();
+
+        String output = animal.toString();
+
+        // Check that toString() mentions every field and ends with the stars
+        assertTrue(output.contains("Zara"));
+        assertTrue(output.contains("4"));
+        assertTrue(output.contains("Gorilla"));
+        assertTrue(output.contains("Jungle"));
+        assertTrue(output.endsWith("***************************"));
+    }
 }
 
 
